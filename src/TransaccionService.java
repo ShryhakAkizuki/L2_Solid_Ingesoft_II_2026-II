@@ -3,28 +3,15 @@ public class TransaccionService {
     private final OracleRepositorio repositorio = new OracleRepositorio();
     private final SmsGateway sms = new SmsGateway();
 
-    private double calculoComision(double monto,String tipo) {
-        double comision;
-        switch(tipo) {
-            case "MISMO_BANCO" -> comision = 0;
-            case "OTRO_BANCO" -> comision = 7_500;
-            case "INTERNACIONAL" -> comision = monto * 0.03 + 25_000;
-            default -> throw new IllegalArgumentException("Tipo de transferencia desconocido");
-        }
-        return comision;
-    }
-
     private void trasferirDinero(Cuenta origen, Cuenta destino, double monto, double comision) {
         origen.retirar(monto + comision);
         destino.depositar(monto);
     }
-
-    public void transferir (Cuenta origen, Cuenta destino, double monto, String tipo) {
-        //1. Validación
+    public void transferir (Cuenta origen, Cuenta destino, double monto, Comision calcComision) {
         if (monto <= 0)throw new IllegalArgumentException("Monto inválido");
         if (monto > 5_000_000)throw new IllegalArgumentException("Supera el tope diario");
 
-        double comision = calculoComision(monto, tipo);
+        double comision = calcComision.calculoComision(monto);
 
         trasferirDinero(origen, destino, monto, comision);
 
@@ -40,6 +27,6 @@ public class TransaccionService {
         notificador.enviarNotificacion(origen, destino, monto);
 
         Auditor auditorTransaccion = new Auditor();
-        auditorTransaccion.generarLog(origen, destino, monto, tipo);
+        auditorTransaccion.generarLog(origen, destino, monto, calcComision);
     }
 }
