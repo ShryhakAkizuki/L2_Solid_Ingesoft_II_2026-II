@@ -48,3 +48,7 @@ En caso de que el área legal quiera cambiar el formato del comprobante ahora s�
 ## Punto de control O
 
 Si llega un nuevo tipo de transferencia basta con crear una nueva clase que extienda la clase abstracta comisión, allí se define el tipo de comisión y la forma de calcularla. Concretamente, si fuera necesario una comisón particular, bastaría con crear una nueva clase que extienda `Comision` y modificar `Main` para que se cree un objeto de esa nueva clase. 
+
+## Punto de control D 
+
+Ahora `TransaccionService` solo recibe objetos de `Notificador`, `ServicioGuardado`, `Comprobante` y `Auditor`, de modo que no crea ninguna clase concreta. Si, por ejemplo, fuera necesario cambiar el repositorio o el método de notificacion, solo es necesario escribir una clase que extienda `Repositorio` y `Gateway` respectivamente y cambiar los argumentos en el constructor de `ServicioGuardado` y `Notificador` en `Main.java`. 

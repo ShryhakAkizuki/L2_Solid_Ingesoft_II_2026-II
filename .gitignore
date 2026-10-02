@@ -15,3 +15,5 @@ src/Notificador.class
 src/ServicioGuardado.class
 src/CalcComision.class
 src/ComisionMismoBanco.class
+src/Repositorio.class
+src/Gateway.class
