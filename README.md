@@ -36,3 +36,11 @@ Repository for developing a practice exercise in refactoring using the S.O.L.I.D
     alt="L2_Diagrama_Base"
     align="left"
   />
+
+
+# 2 - Refactorización
+
+## Punto de control S
+
+La clase `TransaccionService` gestiona el proceso de realización de una transacción, es decir, realiza la transferencia de dinero y crea un `Notificador` para que envíe mensajes por SMS, un `ServicioGuardado` para que se registre la realización de la transferencia, un `Auditor` para que genere logs y `Comprobante` para que imprima el comprobante de la transacción
+En caso de que el área legal quiera cambiar el formato del comprobante ahora sólo es necesario modificar la clase `Comprobante`. 
