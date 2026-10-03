@@ -7,8 +7,14 @@ public class Main{
         Cuenta luis = new CuentaAhorros("001-2","Luis",500_000);
         Cuenta cdtAna = new CDT("CDT-9","Ana",10_000_000, LocalDate.now().plusMonths(6));
 
-        TransaccionService servicio = new TransaccionService();
-        servicio.transferir(ana,luis,150_000,"OTRO_BANCO");
+        Notificador notificador = new Notificador(new SmsGateway());
+        ServicioGuardado serv = new ServicioGuardado(new OracleRepositorio());
+        Auditor auditor = new Auditor();
+        Comprobante comprobante = new Comprobante();
+        TransaccionService servicio = new TransaccionService(serv, notificador, auditor, comprobante);
+
+        Comision comision = new ComisionMismoBanco();
+        servicio.transferir(ana,luis,150_000,comision);
 
         new CobroCuotaManejo().cobrarMensual(List.of(ana, luis, cdtAna));
 
