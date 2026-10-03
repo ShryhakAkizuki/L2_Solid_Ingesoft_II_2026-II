@@ -13,7 +13,7 @@ public class Main{
         Comprobante comprobante = new Comprobante();
         TransaccionService servicio = new TransaccionService(serv, notificador, auditor, comprobante);
 
-        Comision comision = new ComisionMismoBanco();
+        Comision comision = new ComisionOtroBanco();
         servicio.transferir(ana,luis,150_000,comision);
 
         new CobroCuotaManejo().cobrarMensual(List.of(ana, luis, cdtAna));
