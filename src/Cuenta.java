@@ -2,11 +2,13 @@ public class Cuenta {
     protected final String numero;
     protected final String titular;
     protected double saldo;
+    protected boolean retirable;
 
     public Cuenta (String numero, String titular, double saldoInicial) {
         this.numero = numero;
         this.titular = titular;
         this.saldo = saldoInicial;
+        this.retirable = true;
     }
 
     public String getNumero  () { return numero; }
@@ -18,8 +20,11 @@ public class Cuenta {
         saldo += monto;
     }
 
-    public void retirar (double monto) {
-        if( monto > saldo) throw new IllegalStateException("Saldo insuficiente");
+    public boolean retirar (double monto) {
+        if (retirable != true) return false;
+        if (monto > saldo) throw new IllegalStateException("Saldo insuficiente");
+
         saldo -= monto;
+        return true;
     }
 }

@@ -9,11 +9,8 @@ public class CDT extends Cuenta {
     }
 
     @Override
-    public void retirar (double monto) {
-        if (LocalDate.now().isBefore(vencimiento)) {
-            throw new UnsupportedOperationException(
-            "Un CDT no permite retiros antes del vencimiento");
-        }
-        super.retirar(monto);
+    public boolean retirar (double monto) {
+        retirable = !LocalDate.now().isBefore(vencimiento);
+        return super.retirar(monto);
     }
 }

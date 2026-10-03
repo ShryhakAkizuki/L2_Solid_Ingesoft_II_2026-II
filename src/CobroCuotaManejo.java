@@ -5,8 +5,9 @@ public class CobroCuotaManejo {
         
     public void cobrarMensual (List<Cuenta>cuentas) {
         for(Cuenta cuenta:cuentas){
-            cuenta.retirar(CUOTA);
-            System.out.println("Cuota de manejo cobrada a " + cuenta.getNumero());
+
+            if (cuenta.retirar(CUOTA) == true)
+                System.out.println("Cuota de manejo cobrada a " + cuenta.getNumero());
         }
     }
 }

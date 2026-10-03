@@ -37,7 +37,6 @@ Repository for developing a practice exercise in refactoring using the S.O.L.I.D
     align="left"
   />
 
-
 # 2 - Refactorización
 
 ## Punto de control S
@@ -49,6 +48,16 @@ En caso de que el área legal quiera cambiar el formato del comprobante ahora s�
 
 Si llega un nuevo tipo de transferencia basta con crear una nueva clase que extienda la clase abstracta comisión, allí se define el tipo de comisión y la forma de calcularla. Concretamente, si fuera necesario una comisón particular, bastaría con crear una nueva clase que extienda `Comision` y modificar `Main` para que se cree un objeto de esa nueva clase. 
 
-## Punto de control D 
+## Punto de control L
+La solución implementada permite detectar el error mediante el sistema de tipos, ya que se modificó el valor de retorno del método. Cuando el retiro puede realizarse, se ejecuta la transacción y el método devuelve un valor booleano que confirma su correcta ejecución. En caso contrario, devuelve false.
 
+Esto permite que el proceso de cobro de la cuota de manejo conozca si la transacción se realizó correctamente y, en función de ello, muestre el mensaje correspondiente, sin necesidad de generar excepciones.
+
+Esta solución resulta más adecuada que el uso de un bloque try-catch, debido a que cada tipo de cuenta puede implementar su propia lógica para determinar si un retiro es válido. Además, se establece un comportamiento predeterminado en el que la operación está permitida. Por el contrario, utilizar try-catch como mecanismo de control puede ocultar el problema en lugar de solucionarlo explícitamente.
+
+## Punto de control I
+La implementación es correcta, ya que se aplicó una adecuada segregación de responsabilidades mediante múltiples interfaces. De esta forma, para que una clase pueda ser utilizada por el generador de extractos, únicamente debe implementar la interfaz correspondiente y cumplir con el contrato definido, sin verse obligada a proporcionar funcionalidades adicionales que no necesita.
+
+## Punto de control D 
 Ahora `TransaccionService` solo recibe objetos de `Notificador`, `ServicioGuardado`, `Comprobante` y `Auditor`, de modo que no crea ninguna clase concreta. Si, por ejemplo, fuera necesario cambiar el repositorio o el método de notificacion, solo es necesario escribir una clase que extienda `Repositorio` y `Gateway` respectivamente y cambiar los argumentos en el constructor de `ServicioGuardado` y `Notificador` en `Main.java`. 
+
