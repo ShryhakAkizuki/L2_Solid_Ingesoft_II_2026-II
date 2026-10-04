@@ -8,7 +8,12 @@ public class Main{
         Cuenta cdtAna = new CDT("CDT-9","Ana",10_000_000, LocalDate.now().plusMonths(6));
         Cuenta cuentaInfantil = new CuentaInfantil("001-3","Carlos",500_000);
         
-        Notificador notificador = new Notificador(new SmsGateway());
+        Notificador notificador = new Notificador(
+            List.of(
+                new SmsGateway(), new AppGateway()
+            )
+        );
+        
         ServicioGuardado serv = new ServicioGuardado(new OracleRepositorio());
         Auditor auditor = new Auditor();
         Comprobante comprobante = new Comprobante();
