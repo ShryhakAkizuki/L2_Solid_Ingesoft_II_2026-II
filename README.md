@@ -72,7 +72,7 @@ En contraste, si se hubieran intentado realizar estas mismas pruebas con la impl
 | Req. | Archivos a modificar en el código original (estimado) | Archivos existentes modificados (real) | Archivos nuevos | ¿Se rompió alguna prueba? |
 |---|---|---|---|---|
 | R1 | 2 archivos. Se estima modificar `TransaccionService.java` porque es el responsable de ejecutar las transferencias y se tendría que modificar el switch original. Además `Main.java`. | 1 archivo: `Main.java`. Se agrega el código correspondiente a la transferencia por medio de llaves. | 1 archivo. `ComisionLlave.java` para establecer una comisión de $0. Manteniendo la misma lógica de las comisiones anteriores | No. La lógica existente de `transferir()` y las comisiones actuales no se modifican, por lo que las pruebas de las funcionalidades existentes continuan funcionando. |
-| R2 |  | — | — | — |
+| R2 | 2 archivos. Se estima que hubiera sido necesario modificar el `Main.java` | 1 archivo. Sólo se modificó el `Main.java`. | 1 archivo. Se creó el archivo `CuentaInfantil.java` que extiende `Cuenta.java`. En este se modificó la lógica de retiro para que se pudiera verificar el límite diario | No, no se alteró el funcionamiento de las demás clases, en particular, no se hicieron cambios sobre `Cuenta.java` ni `TransaccionService.java` |
 | R3 | — | — | — | — |
 | R4 | — | — | — | — |
 | R5 | — | — | — | — |

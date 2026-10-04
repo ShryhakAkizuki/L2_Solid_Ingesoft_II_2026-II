@@ -6,7 +6,8 @@ public class Main{
         Cuenta ana = new CuentaAhorros("001-1","Ana",2_000_000);
         Cuenta luis = new CuentaAhorros("001-2","Luis",500_000);
         Cuenta cdtAna = new CDT("CDT-9","Ana",10_000_000, LocalDate.now().plusMonths(6));
-
+        Cuenta cuentaInfantil = new CuentaInfantil("001-3","Carlos",500_000);
+        
         Notificador notificador = new Notificador(new SmsGateway());
         ServicioGuardado serv = new ServicioGuardado(new OracleRepositorio());
         Auditor auditor = new Auditor();
@@ -19,6 +20,13 @@ public class Main{
         Comision comisionLlave = new ComisionLlave();
         // aqui estaría el código de búsqueda de llaves
         servicio.transferir(ana, luis, 50_000, comisionLlave);
+
+        servicio.transferir(cuentaInfantil, ana, 150_000, comision);
+        try {
+            servicio.transferir(cuentaInfantil, ana, 60_000, comision);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
 
         new CobroCuotaManejo().cobrarMensual(List.of(ana, luis, cdtAna));
 
