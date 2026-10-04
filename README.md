@@ -66,3 +66,15 @@ Ahora `TransaccionService` solo recibe objetos de `Notificador`, `ServicioGuarda
 Las cinco pruebas unitarias diseñadas tardan aproximadamente 57 ms en ejecutarse. No fue necesario modificar ninguna línea de `TransaccionService`, ya que la clase depende únicamente de abstracciones, lo que permite sustituir sus dependencias por implementaciones simuladas durante las pruebas.
 
 En contraste, si se hubieran intentado realizar estas mismas pruebas con la implementación del bloque 1, probablemente habría sido necesario modificar `TransaccionService` para poder reemplazar o aislar sus dependencias, dificultando las pruebas unitarias y aumentando el acoplamiento de la clase.
+
+# Bloque 4 - Nuevos requerimientos
+
+| Req. | Archivos a modificar en el código original (estimado) | Archivos existentes modificados (real) | Archivos nuevos | ¿Se rompió alguna prueba? |
+|---|---|---|---|---|
+| R1 | 2 archivos. Se estima modificar `TransaccionService.java` porque es el responsable de ejecutar las transferencias y se tendría que modificar el switch original. Además `Main.java`. | 1 archivo: `Main.java`. Se agrega el código correspondiente a la transferencia por medio de llaves. | 1 archivo. `ComisionLlave.java` para establecer una comisión de $0. Manteniendo la misma lógica de las comisiones anteriores | No. La lógica existente de `transferir()` y las comisiones actuales no se modifican, por lo que las pruebas de las funcionalidades existentes continuan funcionando. |
+| R2 |  | — | — | — |
+| R3 | — | — | — | — |
+| R4 | — | — | — | — |
+| R5 | — | — | — | — |
+
+

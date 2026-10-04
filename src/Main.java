@@ -16,6 +16,10 @@ public class Main{
         Comision comision = new ComisionOtroBanco();
         servicio.transferir(ana,luis,150_000,comision);
 
+        Comision comisionLlave = new ComisionLlave();
+        // aqui estaría el código de búsqueda de llaves
+        servicio.transferir(ana, luis, 50_000, comisionLlave);
+
         new CobroCuotaManejo().cobrarMensual(List.of(ana, luis, cdtAna));
 
         List<GenerarExtracto>productos=
