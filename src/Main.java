@@ -14,7 +14,7 @@ public class Main{
             )
         );
         
-        ServicioGuardado serv = new ServicioGuardado(new OracleRepositorio());
+        ServicioGuardado serv = new ServicioGuardado(new PostgresRepositorio());
         Auditor auditor = new Auditor();
         Comprobante comprobante = new Comprobante();
         Antifraude antifraude = new Antifraude();
