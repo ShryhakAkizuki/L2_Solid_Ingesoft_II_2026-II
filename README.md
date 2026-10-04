@@ -81,4 +81,22 @@ En contraste, si se hubieran intentado realizar estas mismas pruebas con la impl
 | R4 | 1 archivo. Hubiera sido necesario modificar la clase `TransaccionService`, en particular el método `transferir()`. | 2 archivos. Se modificaron los archivos `TransaccionService.java`, para recibir un objeto `Antifraude`, y el archivo `Main.java` para tomar esto en cuenta. | 1 archivo. Se creó una nueva clase `Antifraude.java` | Si. Una de las pruebas dejó de pasar porque crea un objeto `TransaccionService` sin enviar un objeto `Antifraude`. Si bien este problema también podría ser gestionado con varios constructores, no consideramos que sea posible, porque esa modificación es "por regulación", es decir, siempre tendrá por lo menos un `Auditor` (como política de la empresa) y un `Antifraude`. Por lo tanto, sería necesario modificar el archivo de prueba. |
 | R5 | 1 archivo. Hubiera sido necesario modificar el archivo `TransaccionService.java`, haciendo que de acuerdo a un switch creara un objeto `OracleRepositorio` o `OraclePostgres`. | 1 archivo. Se modificó el `Main.java` para crear un objeto de tipo `OraclePostgres`. Esto fue muy sencillo, solo se cambió una línea. | 1 archivo. Se creó un archivo `OraclePostgres.java` que extiende la clase `Repositorio`. | No. No se cambia el funcionamiento de ninguna pieza de código porque todas las interacciones son partir de la abstracción `Repositorio`. |
 
+# Bloque 5 - Revision Cruzada
 
+| Criterio | Sí | No |
+| :--- | :---: | :---: |
+| Entendimos qué hace cada clase leyendo solo su nombre y sus métodos públicos. | **X** | |
+| Pudimos reutilizar piezas existentes sin copiar y pegar código. | **X** | |
+| Implementamos el requerimiento sin modificar la lógica de clases existentes. | **X** | |
+| No encontramos métodos vacíos ni que lancen "no aplica". | **X** | |
+| No encontramos if/switch por tipo que tuvimos que extender. | **X** | |
+| Las pruebas existentes siguieron pasando después de nuestro cambio. | **X** | |
+| No encontramos abstracciones innecesarias (interfaces que no aportan). | | **X** |
+
+**Lo mejor del diseño de la otra pareja:**
+El manejo de las validaciones del CDT. Al configurar la variable `retirable` internamente en la clase `CDT` con base en la fecha y dejar que el método `retirar` de la clase padre haga el trabajo, respetaron el principio de Liskov. No tuvimos que escribir ningún "if" para comprobar si el producto era un CDT al momento de pagar servicios; simplemente fallaba si debía fallar.
+
+**Lo que nos costó extender (y su relación con SOLID):**
+Tuvieron una violación fuerte del **Principio de Inversión de Dependencias (D)**. Clases transversales como `Notificador`, `Auditor` y `Comprobante` exigían recibir objetos concretos de tipo `Cuenta` como destino. Para poder pagar un servicio público (cuyo destino es un String), tuvimos que inyectar una "Cuenta Falsa" (Dummy object) que llevaba la referencia de la factura en el atributo número.
+
+Además, su clase `Notificador` tiene el mensaje de texto hardcodeado en su interior, lo que provocó que al pagar un recibo, el cliente reciba un mensaje ilógico que dice *"Transferiste $184300 a la cuenta AGUA-12345"*. El diseño habría sido verdaderamente reutilizable si esas herramientas hubiesen dependido de abstracciones (ej. recibir un simple `String destinoId` en lugar de una `Cuenta`) y si permitieran que el mensaje a enviar se pasara como parámetro desde el servicio.

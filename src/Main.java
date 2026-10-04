@@ -39,5 +39,12 @@ public class Main{
         List<GenerarExtracto>productos=
             List.of(new TarjetaCredito(3_000_000),new CreditoVivienda(120_000_000));
         for ( GenerarExtracto p : productos) System.out.println(p.generarExtracto());
+
+        PagoServicios servicioPagos = new PagoServicios(
+                serv, notificador, auditor, comprobante, antifraude
+        );
+        System.out.println("\n--- INICIO DE PAGO DE SERVICIO PUBLICO ---");
+        servicioPagos.pagar(ana, "AGUA-12345", 184_300);
+        System.out.println("Saldo de Ana posterior al pago: $" + ana.getSaldo());
     }
 }
