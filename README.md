@@ -58,6 +58,11 @@ Esta solución resulta más adecuada que el uso de un bloque try-catch, debido a
 ## Punto de control I
 La implementación es correcta, ya que se aplicó una adecuada segregación de responsabilidades mediante múltiples interfaces. De esta forma, para que una clase pueda ser utilizada por el generador de extractos, únicamente debe implementar la interfaz correspondiente y cumplir con el contrato definido, sin verse obligada a proporcionar funcionalidades adicionales que no necesita.
 
-## Punto de control D 
-Ahora `TransaccionService` solo recibe objetos de `Notificador`, `ServicioGuardado`, `Comprobante` y `Auditor`, de modo que no crea ninguna clase concreta. Si, por ejemplo, fuera necesario cambiar el repositorio o el método de notificacion, solo es necesario escribir una clase que extienda `Repositorio` y `Gateway` respectivamente y cambiar los argumentos en el constructor de `ServicioGuardado` y `Notificador` en `Main.java`. 
+## Punto de control D
+Ahora `TransaccionService` solo recibe objetos de `Notificador`, `ServicioGuardado`, `Comprobante` y `Auditor`, de modo que no crea ninguna clase concreta. Si, por ejemplo, fuera necesario cambiar el repositorio o el método de notificacion, solo es necesario escribir una clase que extienda `Repositorio` y `Gateway` respectivamente y cambiar los argumentos en el constructor de `ServicioGuardado` y `Notificador` en `Main.java`.
 
+# 3 - Pruebas unitarias
+
+Las cinco pruebas unitarias diseñadas tardan aproximadamente 57 ms en ejecutarse. No fue necesario modificar ninguna línea de `TransaccionService`, ya que la clase depende únicamente de abstracciones, lo que permite sustituir sus dependencias por implementaciones simuladas durante las pruebas.
+
+En contraste, si se hubieran intentado realizar estas mismas pruebas con la implementación del bloque 1, probablemente habría sido necesario modificar `TransaccionService` para poder reemplazar o aislar sus dependencias, dificultando las pruebas unitarias y aumentando el acoplamiento de la clase.
