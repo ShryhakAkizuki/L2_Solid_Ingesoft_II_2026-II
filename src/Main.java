@@ -17,7 +17,8 @@ public class Main{
         ServicioGuardado serv = new ServicioGuardado(new OracleRepositorio());
         Auditor auditor = new Auditor();
         Comprobante comprobante = new Comprobante();
-        TransaccionService servicio = new TransaccionService(serv, notificador, auditor, comprobante);
+        Antifraude antifraude = new Antifraude();
+        TransaccionService servicio = new TransaccionService(serv, notificador, auditor, comprobante, antifraude);
 
         Comision comision = new ComisionOtroBanco();
         servicio.transferir(ana,luis,150_000,comision);

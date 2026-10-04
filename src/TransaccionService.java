@@ -3,14 +3,17 @@ public class TransaccionService {
     private final ServicioGuardado serv;
     private final Notificador notificador;
     private final Auditor auditor;
+    private final Antifraude antifraude;
     private final Comprobante comprobante;
 
-    TransaccionService(ServicioGuardado serv, Notificador notificador, Auditor auditor, Comprobante comprobante){
+    TransaccionService(ServicioGuardado serv, Notificador notificador, Auditor auditor, Comprobante comprobante, Antifraude antifraude){
         this.serv = serv;
         this.notificador = notificador;
         this.auditor = auditor;
         this.comprobante = comprobante;
+        this.antifraude = antifraude;
     }
+
     private void trasferirDinero(Cuenta origen, Cuenta destino, double monto, double comision) {
         origen.retirar(monto + comision);
         destino.depositar(monto);
@@ -25,5 +28,6 @@ public class TransaccionService {
         comprobante.imprimirComprobante(monto, comision, origen, destino);
         notificador.enviarNotificacion(origen, destino, monto);
         auditor.generarLog(origen, destino, monto, calcComision);
+        antifraude.generarLog(origen, destino, monto, calcComision);
     }
 }
