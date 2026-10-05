@@ -36,10 +36,10 @@ Repository for developing a practice exercise in refactoring using the S.O.L.I.D
 ## 1.4 - Diagrama de clases del código original
 
 <img
-    src=".\L2_Diagrama_Base.png"
-    alt="L2_Diagrama_Base"
-    align="left"
-  />
+  src=".\L2_Diagrama_Base.png"
+  alt="L2_Diagrama_Base"
+  align="left"
+/>
 
 # 2 - Refactorización
 
@@ -82,3 +82,36 @@ En contraste, si se hubieran intentado realizar estas mismas pruebas con la impl
 | R5 | 1 archivo. Hubiera sido necesario modificar el archivo `TransaccionService.java`, haciendo que de acuerdo a un switch creara un objeto `OracleRepositorio` o `OraclePostgres`. | 1 archivo. Se modificó el `Main.java` para crear un objeto de tipo `OraclePostgres`. Esto fue muy sencillo, solo se cambió una línea. | 1 archivo. Se creó un archivo `OraclePostgres.java` que extiende la clase `Repositorio`. | No. No se cambia el funcionamiento de ninguna pieza de código porque todas las interacciones son partir de la abstracción `Repositorio`. |
 
 
+# 6 - Cierre
+
+## 6.1 - Diagrama de clases del código final
+
+<img
+  src=".\L2_Diagrama_Final.png"
+  alt="L2_Diagrama_Final"
+  align="left"
+/>
+
+## 6.1 - Tabla comparativa
+
+| Métrica                                                                     | Antes | Despues |
+| --------------------------------------------------------------------------- | ----: | ------: |
+| Líneas del método `transferir`                                              |    36 |	     12 |
+| Número de razones distintas por las que `TransaccionService` podría cambiar |     7 |	      0 |
+| Clases concretas que `TransaccionService` instancia mediante `new`          |     2 |       0 |
+| Métodos vacíos o que lanzan excepciones por "no aplica"                     |     3 |	      0 |
+| ¿Se puede probar `transferir` sin Oracle ni SMS?                            |    No |      Si |
+| Número total de archivos                                                    |    11 |      26 |
+| Archivos existentes modificados en total en el bloque 4                     |       2         |
+
+## 6.3 - Conclusiones
+
+1. Sí, el código final cuenta con un mayor número de archivos. Si bien esta separación favorece la organización, modularidad y distribución de responsabilidades del sistema, también puede afectar la legibilidad y dificultar su mantenimiento cuando algunos archivos contienen únicamente unas pocas líneas de código. Por esta razón, resulta conveniente agrupar aquellas clases o funcionalidades que sean pequeñas y estén estrechamente relacionadas, evitando una fragmentación excesiva de la implementación.
+
+2. En los requerimientos 1 y 5, el uso de abstracciones permite realizar los cambios sin modificar directamente la lógica principal de las transacciones. En su lugar, dicha lógica se adapta a las abstracciones definidas para cada necesidad, como la incorporación de un nuevo tipo de comisión o de una nueva implementación de la base de datos. Esto permite reducir el acoplamiento y facilita la incorporación de nuevas funcionalidades sin afectar significativamente el código existente.
+
+3. El requerimiento 4 implica la integración de nuevos sistemas para implementar funcionalidades de Auditoría y Anti-fraude. Para ello, fue necesario incorporar nuevas clases y abstracciones a un código que originalmente no estaba preparado para este tipo de extensiones. Como consecuencia, algunos de los tests originales pueden fallar debido a modificaciones en la firma de las clases. Adicionalmente, la clase involucrada está acumulando responsabilidades de manera considerable, por lo que resulta importante evaluar el uso de un patrón de diseño o de nuevas abstracciones que permitan distribuir dichas responsabilidades y evitar un crecimiento excesivo de la clase.
+
+4. Aunque aún es necesario realizar trabajo adicional para mejorar la implementación del gestor de transacciones, la versión final representa una mejora significativa frente a la implementación original. La separación de responsabilidades y el uso de abstracciones permiten obtener una estructura más mantenible, con menor acoplamiento y mejor preparada para futuras modificaciones y extensiones.
+
+5. Invertir dos semanas en la refactorización del backend permitiría reducir el tiempo y el costo asociados a la implementación de futuras funcionalidades. De acuerdo con los resultados obtenidos, el uso adecuado de abstracciones facilita la incorporación de nuevos requerimientos, disminuye el impacto sobre el código existente y reduce el riesgo de introducir errores. En consecuencia, la inversión inicial en mejorar la arquitectura puede generar beneficios a largo plazo al hacer que el sistema sea más fácil de mantener, extender y adaptar a nuevos requerimientos.
